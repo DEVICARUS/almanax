@@ -15,7 +15,9 @@ def dofus():
     offering_link = "https://dofuswiki.fandom.com/wiki/" + offering[1].replace(" ", "_")
     
     soup_wiki = getnsoup(offering_link)
-    offering_image = soup_wiki.find_all("img")[1].get("src")
+    offering_image_raw = soup_wiki.find("div", "floatnone").find_all("img")[0].get("src")
+    pattern = r"(https://.+\.png).*"
+    offering_image = regex.match(pattern, offering_image_raw).groups()[0]
 
     return {
         "meridian": meridian,
