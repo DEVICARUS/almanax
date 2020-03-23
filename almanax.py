@@ -9,6 +9,11 @@ def dofus():
     
     meridian = soup_dofus.find("p").string.replace("Quest: Offering for ", "")
     
+    pattern = r"Bonus:\s(.*?)\s*<div\sclass=\"more\">\n\s*(.*?)\s*<div\sclass=\"more-infos\">"
+    bonus_raw = regex.search(pattern, str(soup_dofus)).groups()
+    bonus_name = bonus_raw[0]
+    bonus_description = regex.sub(r"<.*?>", "", bonus_raw[1])
+    
     pattern = r"Find ([0-9]+) (.+) and take the offering to Antyklime Ax"
     offering = regex.match(pattern, soup_dofus.find("p", "fleft").string.strip()).groups()
     
@@ -21,6 +26,10 @@ def dofus():
 
     return {
         "meridian": meridian,
+        "bonus": {
+            "name": bonus_name,
+            "description": bonus_description
+        },
         "offering": {
             "name": offering[1],
             "quantity": offering[0],
