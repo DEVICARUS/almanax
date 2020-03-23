@@ -2,9 +2,18 @@ import regex
 
 from utility import getnsoup
 
-def dofus():
-    soup_almanax = getnsoup("http://www.krosmoz.com/en/almanax")
+def meridian(soup_almanax):
+    soup_meridian = soup_almanax.find("div", id="almanax_boss")
+    
+    pattern = r"<span\sclass=\"title\">(.+)</span><br/?>\n\s*(.*?)\s*</div>"
+    meridian = regex.search(pattern, str(soup_meridian)).groups()
+    
+    return {
+        "name": meridian[0],
+        "description": meridian[1]
+    }
 
+def dofus(soup_almanax):
     soup_dofus = soup_almanax.find("div", "dofus")
     
     meridian = soup_dofus.find("p").string.replace("Quest: Offering for ", "")
