@@ -41,7 +41,7 @@ def dofus(soup_almanax):
         },
         "offering": {
             "name": offering[1],
-            "quantity": offering[0],
+            "quantity": int(offering[0]),
             "image": offering_image, 
             "link": offering_link
         }
